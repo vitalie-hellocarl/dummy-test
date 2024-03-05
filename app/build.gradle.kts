@@ -9,17 +9,10 @@ android {
     namespace = "com.vcroitor.codemagic_test"
     compileSdk = 34
 
-    val keysDevProperties = Properties()
-    keysDevProperties.load(file("../signing/development/carl-development-keystore.properties").inputStream())
-
-    val keysQaProperties = Properties()
-    keysQaProperties.load(file("../signing/qa/carl-qa-keystore.properties").inputStream())
-
-    val keysProdProperties = Properties()
-    keysProdProperties.load(file("../signing/production/carl-production-keystore.properties").inputStream())
-
     signingConfigs {
         create("development") {
+            val keysDevProperties = Properties()
+            keysDevProperties.load(file("../signing/development/carl-development-keystore.properties").inputStream())
             storeFile =
                 file("../signing/development/${keysDevProperties.getProperty("dev.storeFileName")}")
             storePassword = keysDevProperties.getProperty("dev.storePassword")
@@ -27,6 +20,8 @@ android {
             keyPassword = keysDevProperties.getProperty("dev.keyPassword")
         }
         create("production") {
+            val keysProdProperties = Properties()
+            keysProdProperties.load(file("../signing/production/carl-production-keystore.properties").inputStream())
             storeFile =
                 file("../signing/production/${keysProdProperties.getProperty("prod.storeFileName")}")
             storePassword = keysProdProperties.getProperty("prod.storePassword")
@@ -34,6 +29,8 @@ android {
             keyPassword = keysProdProperties.getProperty("prod.keyPassword")
         }
         create("qa") {
+            val keysQaProperties = Properties()
+            keysQaProperties.load(file("../signing/qa/carl-qa-keystore.properties").inputStream())
             storeFile = file("../signing/qa/${keysQaProperties.getProperty("qa.storeFileName")}")
             storePassword = keysQaProperties.getProperty("qa.storePassword")
             keyAlias = keysQaProperties.getProperty("qa.keyAlias")
