@@ -17,7 +17,7 @@ workflows:
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
         - sh script/prepare-setup.sh $CR_CARL_DEV_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
-        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+        - sh script/$CR_CARL_DEV_ENV_NAME/build-$CR_CARL_DEV_ENV_NAME.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
@@ -39,7 +39,7 @@ workflows:
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
         - sh script/prepare-setup.sh $CR_CARL_QA_ENV_NAME $CR_CARL_QA_ENV_PROP_FILE $CR_CARL_QA_KEY_PROP_FILE $CR_CARL_QA_KEY_FILE
-        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+        - sh script/$CR_CARL_QA_ENV_NAME/build-$CR_CARL_QA_ENV_NAME.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
@@ -61,7 +61,7 @@ workflows:
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
         - sh script/prepare-setup.sh $CR_CARL_PROD_ENV_NAME $CR_CARL_PROD_ENV_PROP_FILE $CR_CARL_PROD_KEY_PROP_FILE $CR_CARL_PROD_KEY_FILE
-        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+        - sh script/$CR_CARL_PROD_ENV_NAME/build-$CR_CARL_PROD_ENV_NAME.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
