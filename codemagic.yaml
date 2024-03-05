@@ -2,21 +2,65 @@ workflows:
     build-dev:
       name: Building Development
       labels:
-        - DEV
+        - Development
       instance_type: mac_mini_m1
       max_build_duration: 60
       environment:
         groups:
           - dev_env_group
         vars:
-          CR_CARL_ENV_NAME: "development"
+          CR_CARL_DEV_ENV_NAME: "development"
         java: 17
       cache:
         cache_paths:
             - ~/.gradle/caches
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-        - sh script/prepare-setup.sh $CR_CARL_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
+        - sh script/prepare-setup.sh $CR_CARL_DEV_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
+        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+      artifacts:
+        - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
+        - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
+    build-qa:
+      name: Building QA
+      labels:
+        - QA
+      instance_type: mac_mini_m1
+      max_build_duration: 60
+      environment:
+        groups:
+          - qa_env_group
+        vars:
+          CR_CARL_QA_ENV_NAME: "qa"
+        java: 17
+      cache:
+        cache_paths:
+          - ~/.gradle/caches
+      scripts:
+        - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+        - sh script/prepare-setup.sh $CR_CARL_QA_ENV_NAME $CR_CARL_QA_ENV_PROP_FILE $CR_CARL_QA_KEY_PROP_FILE $CR_CARL_QA_KEY_FILE
+        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+      artifacts:
+        - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
+        - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
+    build-prod:
+      name: Building Production
+      labels:
+        - Production
+      instance_type: mac_mini_m1
+      max_build_duration: 60
+      environment:
+        groups:
+          - prod_env_group
+        vars:
+          CR_CARL_PROD_ENV_NAME: "production"
+        java: 17
+      cache:
+        cache_paths:
+          - ~/.gradle/caches
+      scripts:
+        - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+        - sh script/prepare-setup.sh $CR_CARL_PROD_ENV_NAME $CR_CARL_PROD_ENV_PROP_FILE $CR_CARL_PROD_KEY_PROP_FILE $CR_CARL_PROD_KEY_FILE
         - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
