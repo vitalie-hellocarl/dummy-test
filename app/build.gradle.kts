@@ -20,13 +20,15 @@ android {
 
     signingConfigs {
         create("development") {
-            storeFile = file("../signing/development/${keysDevProperties.getProperty("dev.storeFileName")}")
+            storeFile =
+                file("../signing/development/${keysDevProperties.getProperty("dev.storeFileName")}")
             storePassword = keysDevProperties.getProperty("dev.storePassword")
             keyAlias = keysDevProperties.getProperty("dev.keyAlias")
             keyPassword = keysDevProperties.getProperty("dev.keyPassword")
         }
         create("production") {
-            storeFile = file("../signing/production/${keysProdProperties.getProperty("prod.storeFileName")}")
+            storeFile =
+                file("../signing/production/${keysProdProperties.getProperty("prod.storeFileName")}")
             storePassword = keysProdProperties.getProperty("prod.storePassword")
             keyAlias = keysProdProperties.getProperty("prod.keyAlias")
             keyPassword = keysProdProperties.getProperty("prod.keyPassword")
@@ -55,8 +57,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         debug {
             signingConfig = null

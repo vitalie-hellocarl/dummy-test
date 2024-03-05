@@ -9,16 +9,16 @@ workflows:
         groups:
           - dev_env_group
         vars:
-          PUBLIC_ENV_NAME: "development"
+          CR_CARL_ENV_NAME: "development"
         java: 17
-        cache:
-          cache_paths:
+      cache:
+        cache_paths:
             - ~/.gradle/caches
-          cancel_previous_builds: true
-        scripts:
-          - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-          - sh script/prepare-setup.sh $PUBLIC_ENV_NAME // TODO!!!!
-          - sh script/$PUBLIC_ENV_NAME/build-$PUBLIC_ENV_NAME.sh
-        artifacts:
-          - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
-          - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
+        cancel_previous_builds: true
+      scripts:
+        - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+        - sh script/prepare-setup.sh $CR_CARL_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
+        - sh script/$CR_CARL_ENV_NAME/build-$CR_CARL_ENV_NAME.sh
+      artifacts:
+        - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
+        - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
