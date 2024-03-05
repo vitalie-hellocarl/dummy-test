@@ -1,0 +1,24 @@
+workflows:
+    build-dev:
+      name: Building Development
+      labels:
+        - DEV
+      instance_type: mac_mini_m1
+      max_build_duration: 60
+      environment:
+        groups:
+          - dev_env_group
+        vars:
+          PUBLIC_ENV_NAME: "development"
+        java: 17
+        cache:
+          cache_paths:
+            - ~/.gradle/caches
+          cancel_previous_builds: true
+        scripts:
+          - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+          - sh script/prepare-setup.sh $PUBLIC_ENV_NAME // TODO!!!!
+          - sh script/$PUBLIC_ENV_NAME/build-$PUBLIC_ENV_NAME.sh
+        artifacts:
+          - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
+          - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
