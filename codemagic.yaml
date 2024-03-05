@@ -14,7 +14,6 @@ workflows:
       cache:
         cache_paths:
             - ~/.gradle/caches
-        cancel_previous_builds: true
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
         - sh script/prepare-setup.sh $CR_CARL_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
