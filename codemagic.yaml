@@ -8,16 +8,14 @@ workflows:
       environment:
         groups:
           - dev_env_group
-        vars:
-          CR_CARL_DEV_ENV_NAME: "development"
         java: 17
       cache:
         cache_paths:
             - ~/.gradle/caches
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-        - sh script/prepare-setup.sh $CR_CARL_DEV_ENV_NAME $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
-        - sh script/$CR_CARL_DEV_ENV_NAME/build-$CR_CARL_DEV_ENV_NAME.sh
+        - sh script/prepare-setup.sh "development" $CR_CARL_DEV_ENV_PROP_FILE $CR_CARL_DEV_KEY_PROP_FILE $CR_CARL_DEV_KEY_FILE
+        - sh script/development/build-development.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
@@ -30,16 +28,14 @@ workflows:
       environment:
         groups:
           - qa_env_group
-        vars:
-          CR_CARL_QA_ENV_NAME: "qa"
         java: 17
       cache:
         cache_paths:
           - ~/.gradle/caches
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-        - sh script/prepare-setup.sh $CR_CARL_QA_ENV_NAME $CR_CARL_QA_ENV_PROP_FILE $CR_CARL_QA_KEY_PROP_FILE $CR_CARL_QA_KEY_FILE
-        - sh script/$CR_CARL_QA_ENV_NAME/build-$CR_CARL_QA_ENV_NAME.sh
+        - sh script/prepare-setup.sh "qa" $CR_CARL_QA_ENV_PROP_FILE $CR_CARL_QA_KEY_PROP_FILE $CR_CARL_QA_KEY_FILE
+        - sh script/qa/build-qa.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
@@ -52,16 +48,14 @@ workflows:
       environment:
         groups:
           - prod_env_group
-        vars:
-          CR_CARL_PROD_ENV_NAME: "production"
         java: 17
       cache:
         cache_paths:
           - ~/.gradle/caches
       scripts:
         - echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
-        - sh script/prepare-setup.sh $CR_CARL_PROD_ENV_NAME $CR_CARL_PROD_ENV_PROP_FILE $CR_CARL_PROD_KEY_PROP_FILE $CR_CARL_PROD_KEY_FILE
-        - sh script/$CR_CARL_PROD_ENV_NAME/build-$CR_CARL_PROD_ENV_NAME.sh
+        - sh script/prepare-setup.sh "production" $CR_CARL_PROD_ENV_PROP_FILE $CR_CARL_PROD_KEY_PROP_FILE $CR_CARL_PROD_KEY_FILE
+        - sh script/production/build-production.sh
       artifacts:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
