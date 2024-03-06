@@ -1,6 +1,6 @@
 workflows:
     build-dev:
-      name: Building Development
+      name: Build Development
       labels:
         - Development
       instance_type: mac_mini_m1
@@ -20,7 +20,7 @@ workflows:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
     build-qa:
-      name: Building QA
+      name: Build QA
       labels:
         - QA
       instance_type: mac_mini_m1
@@ -40,7 +40,7 @@ workflows:
         - $CM_BUILD_DIR/app/build/**/outputs/bundle/**/*.aab
         - $CM_BUILD_DIR/app/build/**/outputs/**/mapping.txt
     build-prod:
-      name: Building Production
+      name: Build Production
       labels:
         - Production
       instance_type: mac_mini_m1
